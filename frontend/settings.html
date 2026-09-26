@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    >
+
+    <title>Settings | LEAKLENS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1'
+                        }
+                    },
+
+                    fontFamily: {
+                        sans: [
+                            'Plus Jakarta Sans',
+                            'sans-serif'
+                        ]
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overscroll-behavior-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+
+
+<body class="bg-gradient-to-b from-sky-50 via-white to-sky-50 text-slate-800 min-h-screen flex flex-col">
+
+
+    <!-- HEADER -->
+
+    <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-sky-100 px-4 py-3">
+
+        <div class="max-w-md mx-auto flex items-center gap-3">
+
+            <button
+                id="back-button"
+                type="button"
+                class="w-8 h-8 rounded-full bg-sky-50 hover:bg-sky-100 flex items-center justify-center text-slate-600 transition-colors"
+            >
+
+                <span class="material-symbols-outlined text-[18px]">
+                    arrow_back
+                </span>
+
+            </button>
+
+
+            <div class="flex flex-col">
+
+                <div class="flex items-center gap-1.5">
+
+                    <svg
+                        class="w-5 h-5 text-brand-500"
+                        viewBox="0 0 48 48"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+
+                        <path
+                            d="M6 16C12 12 18 20 24 16C30 12 36 20 42 16"
+                            stroke="currentColor"
+                            stroke-width="4.5"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M6 24C12 20 18 28 24 24C30 20 36 28 42 24"
+                            stroke="currentColor"
+                            stroke-width="4.5"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M6 32C12 28 18 36 24 32C30 28 36 36 42 32"
+                            stroke="currentColor"
+                            stroke-width="4.5"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+
+                    <span class="text-base font-extrabold tracking-tight text-brand-600 leading-none">
+                        LEAKLENS
+                    </span>
+
+                </div>
+
+
+                <span class="text-[10px] font-bold text-brand-400 tracking-wide leading-tight">
+                    The water you can't see
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- MAIN -->
+
+    <main class="w-full max-w-md mx-auto px-5 py-6 flex-1 space-y-5">
+
+
+        <!-- TITLE -->
+
+        <div>
+
+            <div class="flex items-center gap-2">
+
+                <span class="material-symbols-outlined text-brand-500">
+                    settings
+                </span>
+
+                <h1 class="text-2xl font-bold text-slate-800 tracking-tight">
+                    Settings
+                </h1>
+
+            </div>
+
+
+            <p class="text-xs text-slate-500 mt-1">
+                Manage your LEAKLENS diagnostic data.
+            </p>
+
+        </div>
+
+
+
+        <!-- CURRENT DATA -->
+
+        <section class="bg-white rounded-2xl border border-sky-100 shadow-sm p-5">
+
+            <div class="flex items-center gap-2 mb-4">
+
+                <span class="material-symbols-outlined text-brand-500 text-[20px]">
+                    database
+                </span>
+
+
+                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                    Current Diagnostic
+                </span>
+
+            </div>
+
+
+            <div class="space-y-3">
+
+
+                <div class="flex items-center justify-between">
+
+                    <span class="text-xs text-slate-500">
+                        Monthly usage
+                    </span>
+
+                    <span
+                        id="monthly-usage"
+                        class="text-xs font-bold text-slate-800"
+                    >
+                        --
+                    </span>
+
+                </div>
+
+
+                <div class="flex items-center justify-between">
+
+                    <span class="text-xs text-slate-500">
+                        Usage hours
+                    </span>
+
+                    <span
+                        id="usage-hours"
+                        class="text-xs font-bold text-slate-800 text-right max-w-[180px]"
+                    >
+                        --
+                    </span>
+
+                </div>
+
+
+                <div class="flex items-center justify-between">
+
+                    <span class="text-xs text-slate-500">
+                        Fixtures
+                    </span>
+
+                    <span
+                        id="fixture-count"
+                        class="text-xs font-bold text-slate-800"
+                    >
+                        --
+                    </span>
+
+                </div>
+
+
+                <div class="flex items-center justify-between">
+
+                    <span class="text-xs text-slate-500">
+                        Primary fixture
+                    </span>
+
+                    <span
+                        id="primary-fixture"
+                        class="text-xs font-bold text-slate-800 capitalize"
+                    >
+                        --
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ACTIONS -->
+
+        <section class="bg-white rounded-2xl border border-sky-100 shadow-sm p-5">
+
+            <div class="flex items-center gap-2 mb-4">
+
+                <span class="material-symbols-outlined text-brand-500 text-[20px]">
+                    tune
+                </span>
+
+
+                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                    Manage Data
+                </span>
+
+            </div>
+
+
+
+            <button
+                id="edit-data"
+                type="button"
+                class="w-full py-3.5 px-4 rounded-xl bg-sky-50 hover:bg-sky-100 text-brand-600 font-bold text-xs flex items-center gap-3 transition-all"
+            >
+
+                <span class="material-symbols-outlined text-[20px]">
+                    edit
+                </span>
+
+
+                <span>
+                    Edit Diagnostic Information
+                </span>
+
+
+                <span class="material-symbols-outlined text-[18px] ml-auto">
+                    chevron_right
+                </span>
+
+            </button>
+
+
+
+            <button
+                id="clear-data"
+                type="button"
+                class="w-full py-3.5 px-4 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs flex items-center gap-3 transition-all mt-2.5"
+            >
+
+                <span class="material-symbols-outlined text-[20px]">
+                    delete
+                </span>
+
+
+                <span>
+                    Reset Diagnostic Data
+                </span>
+
+            </button>
+
+        </section>
+
+
+
+        <!-- ABOUT -->
+
+        <section class="bg-sky-50/80 border border-sky-100 rounded-2xl p-5">
+
+            <div class="flex items-center gap-3 mb-3">
+
+                <div class="w-10 h-10 rounded-xl bg-white text-brand-500 flex items-center justify-center shadow-sm">
+
+                    <span class="material-symbols-outlined">
+                        water_drop
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <div class="text-sm font-extrabold text-slate-800">
+                        LEAKLENS
+                    </div>
+
+                    <div class="text-[10px] text-slate-500">
+                        The water you can't see
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p class="text-[11px] leading-5 text-slate-500">
+                LEAKLENS uses consumption patterns and household information to identify possible hidden water leaks and estimate their impact.
+            </p>
+
+
+            <div class="mt-4 pt-3 border-t border-sky-100 text-[10px] text-slate-400">
+                Hackathon MVP • AI-assisted water leak detection
+            </div>
+
+        </section>
+
+
+
+        <!-- BACK -->
+
+        <div class="pt-1 pb-8">
+
+            <button
+                id="back-to-results"
+                type="button"
+                class="w-full py-3.5 px-6 rounded-2xl bg-white border border-sky-100 hover:border-brand-300 text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition-all"
+            >
+
+                <span class="material-symbols-outlined text-[19px]">
+                    arrow_back
+                </span>
+
+                Back to Results
+
+            </button>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- SHARED STATE -->
+
+    <script src="/frontend/js/state.js"></script>
+
+
+
+    <!-- PAGE JAVASCRIPT -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const state = loadState();
+
+
+            const monthlyUsage =
+                document.getElementById("monthly-usage");
+
+            const usageHours =
+                document.getElementById("usage-hours");
+
+            const fixtureCount =
+                document.getElementById("fixture-count");
+
+            const primaryFixture =
+                document.getElementById("primary-fixture");
+
+
+
+            /*
+             * Display current state
+             */
+
+            monthlyUsage.textContent =
+                (state.monthly_usage_m3 || 0) +
+                " m³/month";
+
+
+            fixtureCount.textContent =
+                state.fixture_count || 0;
+
+
+            primaryFixture.textContent =
+                (state.primary_fixture || "Not selected")
+                    .replaceAll("_", " ");
+
+
+            if (
+                Array.isArray(state.usage_hours) &&
+                state.usage_hours.length > 0
+            ) {
+
+                usageHours.textContent =
+                    state.usage_hours
+                        .map(function (hour) {
+
+                            return hour
+                                .charAt(0)
+                                .toUpperCase() +
+                                hour.slice(1);
+
+                        })
+                        .join(", ");
+
+            } else {
+
+                usageHours.textContent =
+                    "Not selected";
+
+            }
+
+
+
+            /*
+             * Edit information
+             */
+
+            document
+                .getElementById("edit-data")
+                .addEventListener("click", function () {
+
+                    window.location.href =
+                        "usage.html";
+
+                });
+
+
+
+            /*
+             * Clear diagnostic data
+             */
+
+            document
+                .getElementById("clear-data")
+                .addEventListener("click", function () {
+
+                    const confirmed =
+                        window.confirm(
+                            "Reset all LEAKLENS diagnostic information?"
+                        );
+
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+
+                    localStorage.removeItem(
+                        "leaklens_state"
+                    );
+
+
+                    window.location.href =
+                        "usage.html";
+
+                });
+
+
+
+            /*
+             * Back to results
+             */
+
+            document
+                .getElementById("back-to-results")
+                .addEventListener("click", function () {
+
+                    window.location.href =
+                        "results.html";
+
+                });
+
+
+
+            /*
+             * Header back button
+             */
+
+            document
+                .getElementById("back-button")
+                .addEventListener("click", function () {
+
+                    window.location.href =
+                        "results.html";
+
+                });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

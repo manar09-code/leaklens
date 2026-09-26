@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+  <title>2. Fixtures Questionnaire | LEAKLENS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1'
+            }
+          },
+
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overscroll-behavior-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .fixture-option.selected {
+      border-color: #38bdf8;
+      background-color: rgba(240, 249, 255, 0.9);
+    }
+
+    .fixture-option.selected .fixture-icon {
+      background-color: #38bdf8;
+      color: white;
+    }
+
+    .fixture-option.selected .fixture-check {
+      color: #0ea5e9;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-sky-50 via-white to-sky-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-sky-100 px-4 py-3">
+
+    <div class="max-w-md mx-auto flex items-center justify-between">
+
+      <div class="flex items-center gap-2.5">
+
+        <button
+          id="back-button"
+          type="button"
+          class="w-8 h-8 rounded-full bg-sky-50 hover:bg-sky-100 flex items-center justify-center text-slate-600 transition-colors"
+          aria-label="Go back"
+        >
+          <span class="material-symbols-outlined text-[18px]">
+            arrow_back
+          </span>
+        </button>
+
+        <div class="flex flex-col">
+
+          <div class="flex items-center gap-1.5">
+
+            <svg
+              class="w-5 h-5 text-brand-500"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 16C12 12 18 20 24 16C30 12 36 20 42 16"
+                stroke="currentColor"
+                stroke-width="4.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M6 24C12 20 18 28 24 24C30 20 36 28 42 24"
+                stroke="currentColor"
+                stroke-width="4.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M6 32C12 28 18 36 24 32C30 28 36 36 42 32"
+                stroke="currentColor"
+                stroke-width="4.5"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            <span class="text-base font-extrabold tracking-tight text-brand-600 leading-none">
+              LEAKLENS
+            </span>
+
+          </div>
+
+          <span class="text-[10px] font-bold text-brand-400 tracking-wide leading-tight">
+            The water you can't see
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Avatar -->
+      <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-400 to-brand-500 text-white flex items-center justify-center shadow-sm ring-2 ring-sky-100">
+        <span class="material-symbols-outlined text-[20px]">
+          account_circle
+        </span>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+  <main class="w-full max-w-md mx-auto px-5 py-6 flex-1 flex flex-col gap-6">
+
+    <!-- STEP PROGRESS -->
+    <div class="bg-white p-4 rounded-2xl border border-sky-100 shadow-sm">
+
+      <div class="flex items-center justify-between mb-2">
+
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+          Step 2 of 2
+        </span>
+
+        <span class="text-xs font-extrabold text-brand-500">
+          100% Completed
+        </span>
+
+      </div>
+
+      <div class="w-full h-2.5 bg-sky-100 rounded-full overflow-hidden p-0.5">
+
+        <div
+          class="h-full bg-gradient-to-r from-brand-400 to-brand-500 rounded-full transition-all duration-500"
+          style="width: 100%;"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TITLE -->
+    <div>
+
+      <h1 class="text-2xl font-bold text-slate-800 tracking-tight">
+        Your Fixtures
+      </h1>
+
+      <p class="text-xs text-slate-500 mt-1">
+        Tell our AI which water fixtures are available in your household.
+      </p>
+
+    </div>
+
+
+    <!-- FIXTURE COUNT -->
+    <section class="space-y-3">
+
+      <label class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+
+        <span class="material-symbols-outlined text-brand-500 text-[18px]">
+          plumbing
+        </span>
+
+        Number of Fixtures
+
+      </label>
+
+
+      <div class="bg-white p-5 rounded-2xl border border-sky-100 shadow-sm">
+
+        <div class="flex items-center justify-between">
+
+          <div>
+
+            <div class="text-sm font-bold text-slate-800">
+              Water Fixtures
+            </div>
+
+            <div class="text-xs text-slate-500 mt-1">
+              Estimate the number of fixtures in your home.
+            </div>
+
+          </div>
+
+
+          <div class="flex items-center gap-3">
+
+            <button
+              id="decrease-fixtures"
+              type="button"
+              class="w-10 h-10 rounded-xl bg-sky-50 hover:bg-sky-100 text-brand-600 flex items-center justify-center transition-all active:scale-95"
+              aria-label="Decrease fixture count"
+            >
+              <span class="material-symbols-outlined">
+                remove
+              </span>
+            </button>
+
+
+            <span
+              id="fixture-count"
+              class="w-8 text-center text-xl font-extrabold text-brand-600"
+            >
+              6
+            </span>
+
+
+            <button
+              id="increase-fixtures"
+              type="button"
+              class="w-10 h-10 rounded-xl bg-brand-500 hover:bg-brand-600 text-white flex items-center justify-center transition-all active:scale-95"
+              aria-label="Increase fixture count"
+            >
+              <span class="material-symbols-outlined">
+                add
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FIXTURE TYPES -->
+    <section class="space-y-3">
+
+      <label class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+
+        <span class="material-symbols-outlined text-brand-500 text-[18px]">
+          water_damage
+        </span>
+
+        Fixtures in Your Home
+
+      </label>
+
+
+      <div class="grid grid-cols-2 gap-2.5">
+
+
+        <!-- Kitchen Sink -->
+        <button
+          type="button"
+          class="fixture-option selected p-3.5 rounded-2xl border-2 border-brand-400 bg-sky-50/80 text-left flex flex-col gap-2 transition-all active:scale-95 shadow-sm"
+          data-fixture="kitchen_sink"
+        >
+
+          <div class="flex items-center justify-between">
+
+            <div class="fixture-icon w-9 h-9 rounded-xl bg-brand-400 text-white flex items-center justify-center">
+              <span class="material-symbols-outlined text-[19px]">
+                kitchen
+              </span>
+            </div>
+
+            <span class="fixture-check material-symbols-outlined text-brand-500 text-[19px]">
+              check_circle
+            </span>
+
+          </div>
+
+          <div>
+
+            <div class="text-xs font-bold text-slate-800">
+              Kitchen Sink
+            </div>
+
+            <div class="text-[10px] text-slate-500">
+              Sink & faucet
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <!-- Bathroom Sink -->
+        <button
+          type="button"
+          class="fixture-option p-3.5 rounded-2xl bg-white border border-sky-100 text-left flex flex-col gap-2 transition-all active:scale-95 shadow-sm"
+          data-fixture="bathroom_sink"
+        >
+
+          <div class="flex items-center justify-between">
+
+            <div class="fixture-icon w-9 h-9 rounded-xl bg-sky-50 text-slate-500 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[19px]">
+                wash
+              </span>
+            </div>
+
+            <span class="fixture-check material-symbols-outlined text-slate-300 text-[19px]">
+              radio_button_unchecked
+            </span>
+
+          </div>
+
+          <div>
+
+            <div class="text-xs font-bold text-slate-800">
+              Bathroom Sink
+            </div>
+
+            <div class="text-[10px] text-slate-500">
+              Basin & faucet
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <!-- Shower -->
+        <button
+          type="button"
+          class="fixture-option p-3.5 rounded-2xl bg-white border border-sky-100 text-left flex flex-col gap-2 transition-all active:scale-95 shadow-sm"
+          data-fixture="shower"
+        >
+
+          <div class="flex items-center justify-between">
+
+            <div class="fixture-icon w-9 h-9 rounded-xl bg-sky-50 text-slate-500 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[19px]">
+                shower
+              </span>
+            </div>
+
+            <span class="fixture-check material-symbols-outlined text-slate-300 text-[19px]">
+              radio_button_unchecked
+            </span>
+
+          </div>
+
+          <div>
+
+            <div class="text-xs font-bold text-slate-800">
+              Shower
+            </div>
+
+            <div class="text-[10px] text-slate-500">
+              Shower system
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <!-- Toilet -->
+        <button
+          type="button"
+          class="fixture-option p-3.5 rounded-2xl bg-white border border-sky-100 text-left flex flex-col gap-2 transition-all active:scale-95 shadow-sm"
+          data-fixture="toilet"
+        >
+
+          <div class="flex items-center justify-between">
+
+            <div class="fixture-icon w-9 h-9 rounded-xl bg-sky-50 text-slate-500 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[19px]">
+                wc
+              </span>
+            </div>
+
+            <span class="fixture-check material-symbols-outlined text-slate-300 text-[19px]">
+              radio_button_unchecked
+            </span>
+
+          </div>
+
+          <div>
+
+            <div class="text-xs font-bold text-slate-800">
+              Toilet
+            </div>
+
+            <div class="text-[10px] text-slate-500">
+              Toilet valve
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <!-- Washing Machine -->
+        <button
+          type="button"
+          class="fixture-option p-3.5 rounded-2xl bg-white border border-sky-100 text-left flex flex-col gap-2 transition-all active:scale-95 shadow-sm"
+          data-fixture="washing_machine"
+        >
+
+          <div class="flex items-center justify-between">
+
+            <div class="fixture-icon w-9 h-9 rounded-xl bg-sky-50 text-slate-500 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[19px]">
+                local_laundry_service
+              </span>
+            </div>
+
+            <span class="fixture-check material-symbols-outlined text-slate-300 text-[19px]">
+              radio_button_unchecked
+            </span>
+
+          </div>
+
+          <div>
+
+            <div class="text-xs font-bold text-slate-800">
+              Washing Machine
+            </div>
+
+            <div class="text-[10px] text-slate-500">
+              Water appliance
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <!-- Dishwasher -->
+        <button
+          type="button"
+          class="fixture-option p-3.5 rounded-2xl bg-white border border-sky-100 text-left flex flex-col gap-2 transition-all active:scale-95 shadow-sm"
+          data-fixture="dishwasher"
+        >
+
+          <div class="flex items-center justify-between">
+
+            <div class="fixture-icon w-9 h-9 rounded-xl bg-sky-50 text-slate-500 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[19px]">
+                dishwasher
+              </span>
+            </div>
+
+            <span class="fixture-check material-symbols-outlined text-slate-300 text-[19px]">
+              radio_button_unchecked
+            </span>
+
+          </div>
+
+          <div>
+
+            <div class="text-xs font-bold text-slate-800">
+              Dishwasher
+            </div>
+
+            <div class="text-[10px] text-slate-500">
+              Water appliance
+            </div>
+
+          </div>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRIMARY FIXTURE -->
+    <section class="space-y-3">
+
+      <label
+        for="primary-fixture"
+        class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5"
+      >
+
+        <span class="material-symbols-outlined text-brand-500 text-[18px]">
+          priority_high
+        </span>
+
+        Primary Fixture
+
+      </label>
+
+
+      <div class="relative">
+
+        <select
+          id="primary-fixture"
+          class="w-full appearance-none bg-white border border-sky-100 rounded-2xl px-4 py-4 pr-12 text-sm font-semibold text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-300 focus:border-brand-400"
+        >
+
+          <option value="kitchen_sink">
+            Kitchen Sink
+          </option>
+
+          <option value="bathroom_sink">
+            Bathroom Sink
+          </option>
+
+          <option value="shower">
+            Shower
+          </option>
+
+          <option value="toilet">
+            Toilet
+          </option>
+
+          <option value="washing_machine">
+            Washing Machine
+          </option>
+
+          <option value="dishwasher">
+            Dishwasher
+          </option>
+
+        </select>
+
+        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+          expand_more
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- AI READY CARD -->
+    <div class="bg-gradient-to-r from-sky-50 to-white border border-sky-100 rounded-2xl p-4 shadow-sm">
+
+      <div class="flex items-start gap-3">
+
+        <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center shrink-0">
+
+          <span class="material-symbols-outlined">
+            auto_awesome
+          </span>
+
+        </div>
+
+        <div>
+
+          <div class="text-sm font-bold text-slate-800">
+            AI Diagnostic Ready
+          </div>
+
+          <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">
+            LEAKLENS will combine your household profile with water usage patterns to identify unusual consumption.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CTA -->
+    <div class="pt-2 pb-8">
+
+      <button
+        id="run-diagnostic"
+        type="button"
+        class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-400 to-brand-500 hover:from-brand-500 hover:to-brand-600 text-white font-bold text-sm shadow-md shadow-brand-400/30 flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
+      >
+
+        <span>
+          Run AI Leak Diagnostic
+        </span>
+
+        <span class="material-symbols-outlined text-[20px]">
+          auto_awesome
+        </span>
+
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- SHARED STATE -->
+  <script src="./js/state.js"></script>
+
+
+  <!-- FIXTURES PAGE LOGIC -->
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      /*
+       * Load shared LEAKLENS state.
+       */
+      const state = loadState();
+
+
+      /*
+       * DOM elements
+       */
+      const fixtureCountDisplay =
+        document.getElementById("fixture-count");
+
+      const decreaseButton =
+        document.getElementById("decrease-fixtures");
+
+      const increaseButton =
+        document.getElementById("increase-fixtures");
+
+      const fixtureOptions =
+        document.querySelectorAll(".fixture-option");
+
+      const primaryFixture =
+        document.getElementById("primary-fixture");
+
+      const runDiagnosticButton =
+        document.getElementById("run-diagnostic");
+
+      const backButton =
+        document.getElementById("back-button");
+
+
+      /*
+       * Restore saved fixture count.
+       */
+      let fixtureCount =
+        Number(state.fixture_count) || 6;
+
+      fixtureCount =
+        Math.max(1, Math.min(20, fixtureCount));
+
+      fixtureCountDisplay.textContent =
+        fixtureCount;
+
+
+      /*
+       * Restore saved primary fixture.
+       */
+      let selectedPrimary =
+        state.primary_fixture || "kitchen_sink";
+
+      primaryFixture.value =
+        selectedPrimary;
+
+
+      /*
+       * Update shared state.
+       */
+      function updateState() {
+
+        state.fixture_count =
+          fixtureCount;
+
+        state.primary_fixture =
+          selectedPrimary;
+
+        saveState();
+
+      }
+
+
+      /*
+       * Increase fixture count.
+       */
+      increaseButton.addEventListener("click", function () {
+
+        if (fixtureCount < 20) {
+
+          fixtureCount++;
+
+          fixtureCountDisplay.textContent =
+            fixtureCount;
+
+          updateState();
+
+        }
+
+      });
+
+
+      /*
+       * Decrease fixture count.
+       */
+      decreaseButton.addEventListener("click", function () {
+
+        if (fixtureCount > 1) {
+
+          fixtureCount--;
+
+          fixtureCountDisplay.textContent =
+            fixtureCount;
+
+          updateState();
+
+        }
+
+      });
+
+
+      /*
+       * Fixture cards.
+       *
+       * Clicking a fixture makes it the primary fixture.
+       * This keeps the MVP simple while still giving the user
+       * a meaningful interaction.
+       */
+      fixtureOptions.forEach(function (option) {
+
+        option.addEventListener("click", function () {
+
+          const fixture =
+            option.dataset.fixture;
+
+          selectedPrimary =
+            fixture;
+
+          primaryFixture.value =
+            fixture;
+
+          fixtureOptions.forEach(function (item) {
+
+            item.classList.remove("selected");
+
+            item.classList.remove(
+              "border-2",
+              "border-brand-400",
+              "bg-sky-50/80"
+            );
+
+            item.classList.add(
+              "border",
+              "border-sky-100",
+              "bg-white"
+            );
+
+            const icon =
+              item.querySelector(".fixture-icon");
+
+            const check =
+              item.querySelector(".fixture-check");
+
+            if (icon) {
+
+              icon.classList.remove(
+                "bg-brand-400",
+                "text-white"
+              );
+
+              icon.classList.add(
+                "bg-sky-50",
+                "text-slate-500"
+              );
+
+            }
+
+            if (check) {
+
+              check.textContent =
+                "radio_button_unchecked";
+
+              check.classList.remove(
+                "text-brand-500"
+              );
+
+              check.classList.add(
+                "text-slate-300"
+              );
+
+            }
+
+          });
+
+
+          option.classList.add("selected");
+
+          option.classList.remove(
+            "border",
+            "border-sky-100",
+            "bg-white"
+          );
+
+          option.classList.add(
+            "border-2",
+            "border-brand-400",
+            "bg-sky-50/80"
+          );
+
+
+          const icon =
+            option.querySelector(".fixture-icon");
+
+          const check =
+            option.querySelector(".fixture-check");
+
+
+          if (icon) {
+
+            icon.classList.remove(
+              "bg-sky-50",
+              "text-slate-500"
+            );
+
+            icon.classList.add(
+              "bg-brand-400",
+              "text-white"
+            );
+
+          }
+
+
+          if (check) {
+
+            check.textContent =
+              "check_circle";
+
+            check.classList.remove(
+              "text-slate-300"
+            );
+
+            check.classList.add(
+              "text-brand-500"
+            );
+
+          }
+
+
+          updateState();
+
+        });
+
+      });
+
+
+      /*
+       * Primary fixture dropdown.
+       */
+      primaryFixture.addEventListener("change", function () {
+
+        selectedPrimary =
+          primaryFixture.value;
+
+        updateState();
+
+      });
+
+
+      /*
+       * Run diagnostic.
+       *
+       * For now this only navigates to the diagnostic page.
+       * The real AI/API connection will be added later.
+       */
+      runDiagnosticButton.addEventListener("click", function () {
+
+        updateState();
+
+        window.location.href =
+          "diagnostic.html";
+
+      });
+
+
+      /*
+       * Back button.
+       */
+      backButton.addEventListener("click", function () {
+
+        window.location.href =
+          "usage.html";
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
