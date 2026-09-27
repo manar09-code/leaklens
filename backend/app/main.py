@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.schemas import DiagnosticRequest, DiagnosticResponse
@@ -36,20 +36,16 @@ def health():
 
 @app.post("/api/diagnostic", response_model=DiagnosticResponse)
 def run_diagnostic(payload: DiagnosticRequest):
+    result = diagnose(payload)
+
+    diagnostic_document = {
+        "input": payload.model_dump(),
+        "result": result.model_dump(),
+    }
+
     try:
-        result = diagnose(payload)
-
-        diagnostic_document = {
-            "input": payload.model_dump(),
-            "result": result.model_dump(),
-        }
-
         save_diagnostic(diagnostic_document)
-
-        return result
-
     except Exception as exc:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Erreur de diagnostic: {exc}"
-        )
+        print(f"MongoDB persistence warning: {exc}")
+
+    return result
