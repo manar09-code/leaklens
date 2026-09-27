@@ -1,18 +1,9 @@
-"""
-LEAKLENS backend — API FastAPI.
-
-Lancer en local :
-    uvicorn app.main:app --reload --port 8000
-
-Documentation interactive auto-générée :
-    http://localhost:8000/docs
-"""
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.schemas import DiagnosticRequest, DiagnosticResponse
 from app.logic import diagnose
+from database import save_diagnostic
 
 app = FastAPI(
     title="LEAKLENS API",
@@ -24,9 +15,6 @@ app = FastAPI(
     version="0.1.0",
 )
 
-# CORS ouvert pour le hackathon : le frontend web ET l'app Flutter
-# doivent pouvoir appeler l'API depuis n'importe quelle origine.
-# A restreindre en production.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -49,8 +37,19 @@ def health():
 @app.post("/api/diagnostic", response_model=DiagnosticResponse)
 def run_diagnostic(payload: DiagnosticRequest):
     try:
-        return diagnose(payload)
+        result = diagnose(payload)
+
+        diagnostic_document = {
+            "input": payload.model_dump(),
+            "result": result.model_dump(),
+        }
+
+        save_diagnostic(diagnostic_document)
+
+        return result
+
     except Exception as exc:
-        # En hackathon on préfère un message clair côté frontend
-        # plutôt qu'un crash silencieux.
-        raise HTTPException(status_code=500, detail=f"Erreur de diagnostic: {exc}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Erreur de diagnostic: {exc}"
+        )

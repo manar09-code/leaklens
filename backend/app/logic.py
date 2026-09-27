@@ -122,7 +122,13 @@ def diagnose(payload: DiagnosticRequest) -> DiagnosticResponse:
     )
 
 
-def _build_explanation(leak_detected, excess_ratio, night_signal, fixture_signal, payload) -> str:
+def _build_explanation(
+    leak_detected,
+    excess_ratio,
+    night_signal,
+    fixture_signal,
+    payload
+) -> str:
     if not leak_detected:
         return (
             "La consommation observée reste cohérente avec un usage normal "
@@ -130,18 +136,33 @@ def _build_explanation(leak_detected, excess_ratio, night_signal, fixture_signal
         )
 
     reasons = []
+
     if excess_ratio > 0.3:
-        reasons.append("une consommation nettement supérieure à la normale attendue")
+        reasons.append(
+            "une consommation nettement supérieure à la normale attendue"
+        )
+
     if night_signal:
-        reasons.append("une utilisation d'eau détectée pendant la nuit, quand l'usage devrait être minimal")
+        reasons.append(
+            "une utilisation d'eau détectée pendant la nuit, "
+            "quand l'usage devrait être minimal"
+        )
+
     if fixture_signal >= 1.0:
-        reasons.append(f"une concentration de la consommation sur un seul poste ('{payload.primary_fixture}')")
+        reasons.append(
+            f"une concentration de la consommation sur un seul poste "
+            f"('{payload.primary_fixture}')"
+        )
 
     if not reasons:
-        reasons.append("un profil de consommation légèrement inhabituel")
+        reasons.append(
+            "un profil de consommation légèrement inhabituel"
+        )
 
     return (
-        "Fuite possible détectée : le système observe " + ", ".join(reasons) + ". "
-        "Cette estimation est une probabilité, pas une certitude — Cette estimation"
-        "est une probabilité, pas une certitude — une vérification manuelle peut confirmer le diagnostic."
+        "Fuite possible détectée : le système observe "
+    +   ", ".join(reasons)
+        + ". "
+        "Cette estimation est une probabilité, pas une certitude. "
+        "Une vérification manuelle peut confirmer le diagnostic."
     )
