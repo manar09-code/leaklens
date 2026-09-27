@@ -1,39 +1,38 @@
 async function runLeakDiagnostic(state) {
-    // Temporary mock API.
-    // Later, this function will call the real backend.
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/diagnostic",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    monthly_usage_m3: state.monthly_usage_m3,
+                    usage_hours: state.usage_hours,
+                    fixture_count: state.fixture_count,
+                    primary_fixture: state.primary_fixture
+                })
+            }
+        );
 
-    await new Promise(function (resolve) {
-        setTimeout(resolve, 800);
-    });
+        if (!response.ok) {
+            throw new Error(
+                "Backend diagnostic request failed: " +
+                response.status
+            );
+        }
 
-    const usage = Number(state.monthly_usage_m3) || 20;
-    const fixture = state.primary_fixture || "shower";
+        return await response.json();
 
-    // Simple mock calculation for the demo
-    const estimatedWaste = Math.max(
-        8,
-        Math.round(usage * 0.45)
-    );
+    } catch (error) {
+        console.error(
+            "LEAKLENS diagnostic error:",
+            error
+        );
 
-    const monthlyCost = Math.round(
-        estimatedWaste * 30 * 0.05
-    );
-
-    const confidence = Math.min(
-        97,
-        Math.max(
-            72,
-            Math.round(70 + usage * 0.5)
-        )
-    );
-
-    return {
-        leak_detected: true,
-        confidence: confidence,
-        estimated_waste_liters_per_day: estimatedWaste,
-        estimated_monthly_cost_dt: monthlyCost,
-        suspected_fixture: fixture,
-        explanation:
-            "Your consumption pattern is higher than expected for the reported usage profile. The anomaly is consistent with a possible hidden leak."
-    };
+        throw new Error(
+            "Unable to connect to the diagnostic service. Please try again."
+        );
+    }
 }
