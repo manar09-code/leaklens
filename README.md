@@ -575,46 +575,57 @@ The repository was used as the central source of truth for the project code and 
 
 # Team Workflow
 
-The project was developed as a two-person hackathon team.
+The project was developed as a two-person hackathon team, with responsibilities shared across product, frontend, mobile, backend, database, testing, and presentation.
 
-### Frontend, Mobile & Integration
+### Manar Degachi
 
-**Manar Degachi**
+Manar handled a broad part of the implementation and integration work across the project.
 
-Focus areas:
+Main contributions included:
 
-* Flutter mobile application
-* Android APK
-* API integration
-* Web/frontend integration
-* UI/UX implementation
-* Testing and device validation
-* Presentation preparation
-* Product demonstration
+* Flutter mobile application development.
+* Android application flow and release APK generation.
+* Web frontend integration and UI/UX work.
+* FastAPI backend implementation and integration.
+* A large part of the backend development and debugging.
+* MongoDB/database integration and related persistence work.
+* API contract integration between the backend, web application, and Flutter application.
+* Troubleshooting backend and integration issues.
+* End-to-end testing and device validation.
+* Git/GitHub integration and deployment preparation.
+* A substantial part of the pitch and presentation preparation.
+* Creation and editing of the 90-second demo video.
+* Product demonstration and hackathon submission preparation.
 
-### Backend, AI & Data
+Manar also guided the backend work with the teammate and coordinated the integration between the different project components.
 
-**Eya**
+### Eya
 
-Focus areas:
+Eya contributed to the backend, diagnostic logic, data, and AI/heuristic side of the project, with guidance and collaboration from Manar.
 
-* FastAPI backend
-* Diagnostic engine
-* Data and logic
-* API structure
-* Backend integration
-* AI/heuristic implementation
+Main contributions included:
+
+* FastAPI backend work.
+* Diagnostic engine and heuristic logic.
+* Data and API structure.
+* Backend integration.
+* AI/heuristic implementation.
+* Collaboration on testing and debugging.
+
+### Shared Contributions
 
 Both team members contributed to:
 
-* Product definition
-* MVP decisions
-* Testing
-* Pitch preparation
-* Business Model Canvas
-* Hackathon presentation
+* Problem definition.
+* MVP decisions.
+* Product and UX discussions.
+* Testing.
+* Pitch preparation.
+* Business Model Canvas.
+* Hackathon presentation.
+* Technical decisions and iteration during the hackathon.
 
----
+The final prototype was therefore a collaborative project, while Manar had a particularly broad implementation role spanning **mobile, web, backend, database, integration, testing, presentation, and demo production**.
 
 # Hackathon Deliverables
 
@@ -628,9 +639,19 @@ A working LEAKLENS web and Android prototype.
 
 FastAPI REST API exposing the diagnostic endpoint.
 
-### Demo
+### 90-Second Demo Video
 
-A short product demonstration showing the problem, user input, diagnostic process, and resulting explanation.
+The official short demo video presents the LEAKLENS user journey and the working prototype:
+
+**YouTube Shorts:**  
+https://youtube.com/shorts/-iwD6Q4HJH0?si=i7x7M0lvkq3M-nwp
+
+### Pitch & Presentation Materials
+
+The project presentation, pitch materials, and presentation card are available here:
+
+**Google Drive:**  
+https://drive.google.com/drive/folders/10e2DDKlLsNeUIU_2kwDhsupjcijcVBUc?usp=drive_link
 
 ### Project Documentation
 
@@ -655,8 +676,6 @@ Repository:
 ### Web Prototype
 
 **https://manar09-code.github.io/leaklens/**
-
----
 
 # Testing Results
 
@@ -691,17 +710,19 @@ The API integration was tested with the web and Flutter flows using the same req
 * Estimated water waste
 * Estimated monthly cost
 * Suspected fixture identification
+* MongoDB/database integration
+* Backend persistence work
 * GitHub repository
 * GitHub Pages deployment workflow
 * Android release APK
+* End-to-end web/mobile/API integration
 
 ### Prototype / Development Stage
 
-* MongoDB persistence integration
 * Public backend deployment
 * Extended real-world validation
-
----
+* Production authentication and account management
+* Continuous monitoring and sensor integration
 
 # Limitations
 
@@ -737,72 +758,129 @@ The current prototype is designed with interpretability in mind.
 
 # Future Development
 
-The next versions of LEAKLENS could expand the prototype into a continuous monitoring platform.
+The next development phase is planned as a **15-day post-hackathon build sprint**. The goal is to use the available **NVIDIA Brev voucher** productively rather than letting the opportunity expire, while turning the hackathon prototype into a more complete AI-enabled platform.
 
-### Data
+### 15-Day AI Development Sprint
 
-* Larger real-world consumption datasets.
-* Labelled leak and non-leak scenarios.
-* Historical household consumption profiles.
+During this phase, the team plans to:
+
+* Use the Brev environment/voucher to experiment with and build an AI agent or LLM-based component for LEAKLENS.
+* Integrate the new AI capability into the existing diagnostic workflow rather than replacing the current deterministic engine immediately.
+* Explore an AI assistant that can interpret diagnostic results, explain anomalies in natural language, and help users understand recommended actions.
+* Test how an LLM/agent can work alongside the existing rule-based diagnostic engine.
+* Evaluate quality, reliability, latency, and practical usefulness before making the AI component part of the main product flow.
+
+The current heuristic engine remains the baseline while the AI layer is developed and evaluated.
 
 ### AI / Analytics
 
+Future AI capabilities may include:
+
+* AI-assisted diagnostic explanations.
+* An LLM-powered user assistant.
+* Agentic workflows for interpreting consumption data.
 * Statistical anomaly detection.
 * Time-series analysis.
 * Machine-learning models trained on representative data.
-* Personalized household baselines.
+* Personalized household consumption baselines.
 * Improved confidence calibration.
+* AI-assisted recommendations for investigation and prevention.
 
-### IoT
+### Sensors, IoT & Automation
 
-* Smart-meter integration.
-* Real-time consumption monitoring.
-* Automated anomaly detection.
-* Continuous monitoring.
+The next product phase will also explore connecting LEAKLENS to real-world measurement and automation:
+
+* Water-flow sensors.
+* Smart meters.
+* IoT devices.
+* Automated data collection.
+* Continuous consumption monitoring.
+* Automatic anomaly detection.
+* Automated leak-risk alerts.
+* Sensor-triggered workflows.
+* Integration between sensor data, the backend, and the AI layer.
+
+The long-term goal is to move from **manual data entry** toward **automatic monitoring**.
+
+### Deployment
+
+The team plans to use **Guepard** as part of the next deployment phase to move LEAKLENS toward a publicly accessible production-style environment.
+
+Planned work includes:
+
+* Deploying the backend/API.
+* Deploying the web platform.
+* Connecting the deployed frontend to the public API.
+* Testing the full cloud-based flow.
+* Improving reliability and observability.
+* Preparing the architecture for future scaling.
+
+### Mobile & Distribution
+
+The Flutter application will continue to evolve beyond the hackathon prototype.
+
+Planned goals include:
+
+* Preparing the Android application for Google Play Store publication.
+* Preparing the application for Apple App Store publication.
+* Improving authentication and user accounts.
+* Adding notifications and continuous monitoring.
+* Keeping the mobile and web experiences synchronized with the same backend and AI services.
 
 ### User Experience
+
+Additional product features may include:
 
 * Push notifications.
 * Historical consumption charts.
 * Leak-event timeline.
 * Personalized recommendations.
 * Household profiles.
+* AI-generated explanations.
+* Sensor-based alerts.
+* Action-oriented guidance after a leak signal.
 
-### Platform
+### Production Platform
+
+The longer-term platform roadmap includes:
 
 * Production backend deployment.
 * Scalable database architecture.
-* Authentication and secure user accounts.
+* Secure authentication and user accounts.
 * Monitoring and observability.
 * Production security controls.
-
----
+* Privacy-aware handling of household consumption data.
+* Automated testing and continuous deployment.
 
 # What We Would Build Next
 
-The logical next version of LEAKLENS would move from a **single diagnostic interaction** toward **continuous household monitoring**:
+The immediate post-hackathon direction is to turn LEAKLENS from a static diagnostic prototype into an **AI-assisted, connected, and deployable water-monitoring platform**.
 
-```text
-Smart Meter / IoT Data
-        ↓
-Continuous Data Collection
-        ↓
-Household Baseline
-        ↓
-Anomaly Detection
-        ↓
-Leak Risk Assessment
-        ↓
-Explanation
-        ↓
-Alert
-        ↓
-User Action
-```
+### Target Architecture
 
-This would allow LEAKLENS to detect changes over time rather than relying only on manually entered consumption values.
+~~~text
+Water Sensors / Smart Meter
+          ↓
+Automatic Data Collection
+          ↓
+FastAPI Backend + Database
+          ↓
+Rule-Based Diagnostic
+          ↓
+AI Agent / LLM Layer
+          ↓
+Leak Risk + Explanation
+          ↓
+Automation / Alerts
+          ↓
+Web Platform + Mobile App
+~~~
 
----
+The first phase is the 15-day AI sprint using the available Brev voucher. The team will experiment with an AI agent/LLM component and integrate it with the existing diagnostic flow.
+
+The next phase is deployment and real-world integration using Guepard, followed by sensor/IoT automation and preparation of the mobile application for public distribution through the Google Play Store and Apple App Store.
+
+This roadmap is intentionally incremental: the existing heuristic engine remains the baseline, while each new AI, deployment, sensor, and automation component is tested before being treated as production-ready.
 
 # Repository
 
