@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const createAccountLink = document.querySelector(
             'a[href="#"]'
         );
+        const submitLabel = document.getElementById("auth-submit-label");
 
         // Login tab
         if (loginTab) {
@@ -61,8 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
                 }
 
-                // Authentication is not implemented in the MVP.
-                // Both tabs can enter the application flow.
+                if (submitLabel) {
+                    submitLabel.textContent = "Create Account";
+                }
             });
         }
 
@@ -71,12 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (loginTab) {
             loginTab.addEventListener("click", function () {
                 mode = "login";
+                if (submitLabel) submitLabel.textContent = "Log In";
             });
         }
 
         if (signupTab) {
             signupTab.addEventListener("click", function () {
                 mode = "signup";
+                if (submitLabel) submitLabel.textContent = "Create Account";
             });
         }
 
@@ -114,4 +118,14 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
+});
+
+
+// Profile / settings navigation available on all authenticated screens.
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-profile-button]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            window.location.href = "settings.html";
+        });
+    });
 });
