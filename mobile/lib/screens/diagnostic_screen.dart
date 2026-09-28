@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/diagnostic_state.dart';
 import 'results_screen.dart';
+import 'settings_screen.dart';
 
 class DiagnosticScreen extends StatefulWidget {
   final DiagnosticState diagnosticState;
