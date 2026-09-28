@@ -10,7 +10,7 @@
  */
 
 const LEAKLENS_API_BASE_URL = (
-    window.LEAKLENS_API_BASE_URL || ""
+    window.LEAKLENS_API_BASE_URL || "https://leaklens-api-a7pi.onrender.com"
 ).replace(/\/$/, "");
 
 
