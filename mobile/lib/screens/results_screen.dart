@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import '../models/diagnostic_state.dart';
-import '../services/api_service.dart';\nimport 'settings_screen.dart';
+import '../services/api_service.dart';
+import 'settings_screen.dart';
 
 class ResultsScreen extends StatefulWidget {
   final DiagnosticState diagnosticState;
