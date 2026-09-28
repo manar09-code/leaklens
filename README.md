@@ -247,6 +247,17 @@ LEAKLENS/
 │   └── sample_usage.csv
 │
 ├── mobile/
+│   ├── lib/
+│   │   ├── main.dart
+│   │   ├── models/
+│   │   ├── screens/
+│   │   │   ├── usage_screen.dart
+│   │   │   ├── fixtures_screen.dart
+│   │   │   ├── diagnostic_screen.dart
+│   │   │   ├── results_screen.dart
+│   │   │   └── settings_screen.dart
+│   │   └── services/
+│   │       └── api_service.dart
 │   └── Flutter Android application
 │
 ├── .github/
@@ -259,6 +270,59 @@ LEAKLENS/
 ```
 
 ---
+
+---
+
+## Recent Fixes & Improvements
+
+The prototype went through an integration and reliability pass on **September 28, 2026**.
+
+### Authentication
+
+* Unified login and signup behavior across the web and Flutter clients.
+* The signup action now clearly displays **Create Account**.
+* Successful signup returns the user to the login state instead of automatically entering the application.
+* Added clearer authentication error handling.
+* The FastAPI authentication flow was made more resilient when the MongoDB connection is temporarily unavailable.
+
+### Web Application Navigation
+
+* Added working profile buttons across the main web screens.
+* Profile buttons now open the shared **Settings** page.
+* Added explicit back navigation through the main flow:
+  * Usage → Login
+  * Fixtures → Usage
+  * Diagnostic → Fixtures
+  * Results → Diagnostic
+  * Settings → Results
+* Added **Log Out** to the web Settings page.
+* Logout clears the local authentication and diagnostic state before returning to login.
+* Removed an accidental debug/explanatory text block from the login page and added cache-busting to the GitHub Pages entry redirect.
+
+### Flutter Android Application
+
+The mobile application was updated to follow the same navigation model:
+
+* Added profile/settings access from Usage, Fixtures, Diagnostic, and Results.
+* Added a dedicated mobile **Profile & Settings** screen.
+* Added **Edit diagnostic data**.
+* Added **Clear diagnostic data**.
+* Added **Log Out** and mobile session clearing.
+* Kept the existing back-navigation flow between diagnostic screens.
+* Kept the Flutter app connected to the same public FastAPI backend.
+
+The updated Android application is built through GitHub Actions from the `mobile/` project.
+
+### Backend & Deployment Reliability
+
+* Standardized the deployed API URL used by both web and mobile clients:
+  **https://leaklens-api-a7pi.onrender.com**
+* Configured the Render service to run with **Python 3.13.5**.
+* Added a temporary in-memory authentication fallback for MongoDB connection failures so the demo authentication flow can remain usable when the database is unreachable.
+* The fallback is intentionally non-persistent and is a resilience measure for the hackathon prototype, not a replacement for production database storage.
+
+> **Prototype note:** The MongoDB fallback improves demo resilience, but production authentication should use persistent storage and proper session management.
+
 
 # Hackathon Development Process
 
@@ -714,8 +778,12 @@ The API integration was tested with the web and Flutter flows using the same req
 * Backend persistence work
 * GitHub repository
 * GitHub Pages deployment workflow
-* Android release APK
+* Render backend deployment
+* Android release build workflow
 * End-to-end web/mobile/API integration
+* Shared profile/settings navigation
+* Logout and session clearing
+* Signup-to-login authentication flow
 
 ### Prototype / Development Stage
 
