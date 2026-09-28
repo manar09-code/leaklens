@@ -66,19 +66,51 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // Login button enters the LEAKLENS questionnaire.
-        if (loginForm) {
-            loginForm.addEventListener("submit", function (event) {
-                event.preventDefault();
-                window.location.href = "usage.html";
+        let mode = "login";
+
+        if (loginTab) {
+            loginTab.addEventListener("click", function () {
+                mode = "login";
             });
         }
 
-        // "Create an account" also enters the application flow.
+        if (signupTab) {
+            signupTab.addEventListener("click", function () {
+                mode = "signup";
+            });
+        }
+
+        if (loginForm) {
+            loginForm.addEventListener("submit", async function (event) {
+                event.preventDefault();
+
+                const inputs = loginForm.querySelectorAll("input");
+                const email = inputs[0]?.value.trim();
+                const password = inputs[1]?.value || "";
+
+                if (!email || !password) {
+                    alert("Please enter your email and password.");
+                    return;
+                }
+
+                try {
+                    if (mode === "signup") {
+                        await signupUser(email, password);
+                    } else {
+                        await loginUser(email, password);
+                    }
+                    window.location.href = "usage.html";
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+        }
+
         if (createAccountLink) {
             createAccountLink.addEventListener("click", function (event) {
                 event.preventDefault();
-                window.location.href = "usage.html";
+                if (signupTab) signupTab.click();
+                loginForm?.querySelector("input")?.focus();
             });
         }
     }
