@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'models/diagnostic_state.dart';
 import 'screens/usage_screen.dart';
+import 'services/api_service.dart';
 
 void main() {
   runApp(const LeakLensApp());
@@ -178,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 }
 
-  void _handleAuth() {
+  Future<void> _handleAuth() async {
     final email = emailController.text.trim();
     final password = passwordController.text;
 
@@ -186,60 +187,59 @@ class _LoginScreenState extends State<LoginScreen> {
       _showMessage(
         'Please enter your email and password.',
         error: true,
-    );
+      );
       return;
     }
 
     if (!email.contains('@') || !email.contains('.')) {
-      _showMessage('Please enter a valid email address.');
+      _showMessage('Please enter a valid email address.', error: true);
       return;
     }
 
     if (password.length < 6) {
-      _showMessage('Password must contain at least 6 characters.');
-      return;
-    }
-
-    if (!isLogin) {
-      registeredEmail = email;
-      registeredPassword = password;
-
-      setState(() {
-        isLogin = true;
-        passwordController.clear();
-      });
-
       _showMessage(
-        'Account created successfully. You can now log in.',
-      );
-
-      return;
-    }
-
-    if (registeredEmail == null || registeredPassword == null) {
-      _showMessage(
-        'No account found. Please create an account first.',
+        'Password must contain at least 6 characters.',
+        error: true,
       );
       return;
     }
 
-    if (email != registeredEmail || password != registeredPassword) {
-      _showMessage(
-        'Incorrect email or password.',
-      );
-      return;
-    }
+    try {
+      if (!isLogin) {
+        await ApiService.signup(email, password);
 
-    final state = DiagnosticState();
+        if (!mounted) return;
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UsageScreen(
-          state: state,
+        setState(() {
+          isLogin = true;
+          passwordController.clear();
+        });
+
+        _showMessage(
+          'Account created successfully. You can now log in.',
+          success: true,
+        );
+        return;
+      }
+
+      await ApiService.login(email, password);
+
+      if (!mounted) return;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UsageScreen(
+            state: DiagnosticState(),
+          ),
         ),
-      ),
-    );
+      );
+    } catch (error) {
+      _showMessage(
+        error.toString().replaceFirst('Exception: ', ''),
+        error: true,
+      );
+    }
   }
 
   void _openForgotPassword() {
