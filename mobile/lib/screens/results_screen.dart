@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import '../models/diagnostic_state.dart';
-import '../services/api_service.dart';
+import '../services/api_service.dart';\nimport 'settings_screen.dart';
 
 class ResultsScreen extends StatefulWidget {
   final DiagnosticState diagnosticState;
@@ -357,6 +357,35 @@ class _ResultsScreenState extends State<ResultsScreen> {
             brand600,
           ),
         ),
+        const SizedBox(width: 10),
+          IconButton(
+            tooltip: 'Profile & Settings',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SettingsScreen(
+                    diagnosticState: widget.diagnosticState,
+                  ),
+                ),
+              );
+            },
+            icon: Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF38BDF8), Color(0xFF0EA5E9)],
+                ),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.account_circle,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ),
       ],
     );
   }
