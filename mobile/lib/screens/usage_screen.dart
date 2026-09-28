@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/diagnostic_state.dart';
-import 'fixtures_screen.dart';
+import 'fixtures_screen.dart';\nimport 'settings_screen.dart';
 
 class UsageScreen extends StatefulWidget {
   final DiagnosticState state;
@@ -186,30 +186,43 @@ class _UsageScreenState extends State<UsageScreen> {
             ),
           ),
 
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  brand400,
-                  brand500,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              shape: BoxShape.circle,
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x220EA5E9),
-                  blurRadius: 4,
+          IconButton(
+            tooltip: 'Profile & Settings',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SettingsScreen(
+                    diagnosticState: widget.state,
+                  ),
                 ),
-              ],
-            ),
-            child: const Icon(
-              Icons.account_circle,
-              color: Colors.white,
-              size: 20,
+              );
+            },
+            icon: Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    brand400,
+                    brand500,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                shape: BoxShape.circle,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x220EA5E9),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.account_circle,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
         ],
