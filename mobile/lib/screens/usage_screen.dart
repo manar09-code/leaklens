@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/diagnostic_state.dart';
-import 'fixtures_screen.dart';\nimport 'settings_screen.dart';
+import 'fixtures_screen.dart';
+import 'settings_screen.dart';
 
 class UsageScreen extends StatefulWidget {
   final DiagnosticState state;
