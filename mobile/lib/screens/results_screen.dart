@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
 import '../models/diagnostic_state.dart';
+import '../services/api_service.dart';
 
 class ResultsScreen extends StatefulWidget {
   final DiagnosticState diagnosticState;
@@ -41,19 +40,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   Future<void> _runDiagnostic() async {
     try {
-      final response = await http.post(
-        Uri.parse('https://leaklens-api-a7pi.onrender.com/api/diagnostic'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(widget.diagnosticState.toJson()),
+      final data = await ApiService.diagnostic(
+        widget.diagnosticState.toJson(),
       );
-
-      if (response.statusCode != 200) {
-        throw Exception('API returned ${response.statusCode}');
-      }
-
-      final data = jsonDecode(response.body);
 
       if (!mounted) return;
 
@@ -75,7 +64,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
       setState(() {
         loading = false;
-        error = 'Unable to connect to the LEAKLENS backend.';
+        error = e.toString().replaceFirst('Exception: ', '');
       });
     }
   }
