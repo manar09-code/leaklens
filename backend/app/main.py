@@ -61,7 +61,10 @@ def login(payload: dict):
 
 @app.post("/api/diagnostic", response_model=DiagnosticResponse)
 
-def run_diagnostic(payload: DiagnosticRequest):
+def run_diagnostic(
+    payload: DiagnosticRequest,
+    authorization: str | None = Header(default=None),
+):
     result = diagnose(payload)
 
     diagnostic_document = {
@@ -70,7 +73,12 @@ def run_diagnostic(payload: DiagnosticRequest):
     }
 
     try:
-        save_diagnostic(diagnostic_document)
+        token = authorization.removeprefix("Bearer ").strip() if authorization else ""
+        user = get_user_by_token(token) if token else None
+        save_diagnostic(
+            diagnostic_document,
+            user_id=user["user_id"] if user else None,
+        )
     except Exception as exc:
         print(f"MongoDB persistence warning: {exc}")
 
