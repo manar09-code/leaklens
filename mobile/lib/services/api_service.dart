@@ -37,11 +37,14 @@ class ApiService {
     );
 
     final data = jsonDecode(response.body);
+
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw Exception(data['detail'] ?? 'Authentication failed.');
     }
 
     token = data['token']?.toString();
+    currentEmail = email.trim();
+
     return Map<String, dynamic>.from(data);
   }
 
@@ -63,15 +66,16 @@ class ApiService {
     );
 
     final data = jsonDecode(response.body);
+
     if (response.statusCode != 200) {
       throw Exception(data['detail'] ?? 'Diagnostic request failed.');
     }
 
     return Map<String, dynamic>.from(data);
   }
-}
 
   static void clearSession() {
     token = null;
     currentEmail = null;
   }
+}
