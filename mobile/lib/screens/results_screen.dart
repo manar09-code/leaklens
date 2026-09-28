@@ -42,7 +42,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Future<void> _runDiagnostic() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.100.7:8000/api/diagnostic'),
+        Uri.parse('https://leaklens-api-a7pi.onrender.com/api/diagnostic'),
         headers: {
           'Content-Type': 'application/json',
         },
