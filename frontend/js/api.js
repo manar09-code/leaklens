@@ -231,13 +231,34 @@ function runLocalDiagnostic(state) {
 }
 
 
+async function authenticate(path, email, password) {
+    const response = await fetch(LEAKLENS_API_BASE_URL + path, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email, password})
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.detail || "Authentication failed.");
+    localStorage.setItem("leaklens_auth", JSON.stringify(data));
+    return data;
+}
+
+async function loginUser(email, password) {
+    return authenticate("/api/auth/login", email, password);
+}
+
+async function signupUser(email, password) {
+    return authenticate("/api/auth/signup", email, password);
+}
+
 async function runRemoteDiagnostic(state) {
     const response = await fetch(
         LEAKLENS_API_BASE_URL + "/api/diagnostic",
         {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ...(localStorage.getItem("leaklens_auth") ? { "Authorization": "Bearer " + JSON.parse(localStorage.getItem("leaklens_auth")).token } : {})
             },
             body: JSON.stringify({
                 monthly_usage_m3:
