@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static const String baseUrl = 'https://leaklens-api-a7pi.onrender.com';
 
-  static String? token;
+  static String? token;\n  static String? currentEmail;
 
   static Future<Map<String, dynamic>> signup(
     String email,
@@ -69,3 +69,4 @@ class ApiService {
     return Map<String, dynamic>.from(data);
   }
 }
+\n  static void clearSession() {\n    token = null;\n    currentEmail = null;\n  }\n
