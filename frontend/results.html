@@ -549,7 +549,8 @@ const diagnostic =
 
                 fixture.textContent =
                     diagnostic.suspected_fixture
-                        .replaceAll("_", " ");
+                        ? diagnostic.suspected_fixture.replaceAll("_", " ")
+                        : "No specific fixture identified";
 
 
                 explanation.textContent =
