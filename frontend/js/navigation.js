@@ -1,86 +1,63 @@
 document.addEventListener("DOMContentLoaded", function () {
     const currentPage = window.location.pathname.split("/").pop();
 
+    // Authentication page
     if (currentPage === "login.html" || currentPage === "") {
         const loginTab = document.getElementById("tab-login");
         const signupTab = document.getElementById("tab-signup");
         const loginForm = document.querySelector("form");
-        const createAccountLink = document.querySelector(
-            'a[href="#"]'
-        );
+        const createAccountLink = document.getElementById("create-account-link");
         const submitLabel = document.getElementById("auth-submit-label");
-
-        // Login tab
-        if (loginTab) {
-            loginTab.addEventListener("click", function () {
-                loginTab.classList.add(
-                    "bg-white",
-                    "text-brand-600",
-                    "shadow-sm"
-                );
-
-                loginTab.classList.remove(
-                    "text-slate-500"
-                );
-
-                if (signupTab) {
-                    signupTab.classList.remove(
-                        "bg-white",
-                        "text-brand-600",
-                        "shadow-sm"
-                    );
-
-                    signupTab.classList.add(
-                        "text-slate-500"
-                    );
-                }
-            });
-        }
-
-        // Sign Up tab
-        if (signupTab) {
-            signupTab.addEventListener("click", function () {
-                signupTab.classList.add(
-                    "bg-white",
-                    "text-brand-600",
-                    "shadow-sm"
-                );
-
-                signupTab.classList.remove(
-                    "text-slate-500"
-                );
-
-                if (loginTab) {
-                    loginTab.classList.remove(
-                        "bg-white",
-                        "text-brand-600",
-                        "shadow-sm"
-                    );
-
-                    loginTab.classList.add(
-                        "text-slate-500"
-                    );
-                }
-
-                if (submitLabel) {
-                    submitLabel.textContent = "Create Account";
-                }
-            });
-        }
 
         let mode = "login";
 
+        function setMode(nextMode) {
+            mode = nextMode;
+
+            const isLogin = mode === "login";
+
+            if (loginTab) {
+                loginTab.classList.toggle("bg-white", isLogin);
+                loginTab.classList.toggle("text-brand-600", isLogin);
+                loginTab.classList.toggle("shadow-sm", isLogin);
+                loginTab.classList.toggle("text-slate-500", !isLogin);
+            }
+
+            if (signupTab) {
+                signupTab.classList.toggle("bg-white", !isLogin);
+                signupTab.classList.toggle("text-brand-600", !isLogin);
+                signupTab.classList.toggle("shadow-sm", !isLogin);
+                signupTab.classList.toggle("text-slate-500", isLogin);
+            }
+
+            if (submitLabel) {
+                submitLabel.textContent = isLogin
+                    ? "Log In"
+                    : "Create Account";
+            }
+
+            if (loginForm) {
+                loginForm.dataset.mode = mode;
+            }
+        }
+
         if (loginTab) {
             loginTab.addEventListener("click", function () {
-                mode = "login";
-                if (submitLabel) submitLabel.textContent = "Log In";
+                setMode("login");
             });
         }
 
         if (signupTab) {
             signupTab.addEventListener("click", function () {
-                mode = "signup";
-                if (submitLabel) submitLabel.textContent = "Create Account";
+                setMode("signup");
+            });
+        }
+
+        if (createAccountLink) {
+            createAccountLink.addEventListener("click", function (event) {
+                event.preventDefault();
+                setMode("signup");
+                loginForm?.querySelector('input[type="email"]')?.focus();
             });
         }
 
@@ -88,9 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
             loginForm.addEventListener("submit", async function (event) {
                 event.preventDefault();
 
-                const inputs = loginForm.querySelectorAll("input");
-                const email = inputs[0]?.value.trim();
-                const password = inputs[1]?.value || "";
+                const email = loginForm.querySelector('input[type="email"]')?.value.trim() || "";
+                const password = loginForm.querySelector('input[type="password"]')?.value || "";
 
                 if (!email || !password) {
                     alert("Please enter your email and password.");
@@ -100,29 +76,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 try {
                     if (mode === "signup") {
                         await signupUser(email, password);
-                    } else {
-                        await loginUser(email, password);
+
+                        // Signup creates the account, then deliberately returns
+                        // to the login state so the user can authenticate normally.
+                        localStorage.removeItem("leaklens_auth");
+                        setMode("login");
+
+                        const passwordInput =
+                            loginForm.querySelector('input[type="password"]');
+                        if (passwordInput) passwordInput.value = "";
+
+                        alert("Account created successfully. Please log in.");
+                        return;
                     }
+
+                    await loginUser(email, password);
                     window.location.href = "usage.html";
                 } catch (error) {
-                    alert(error.message);
+                    alert(error.message || "Something went wrong.");
                 }
             });
         }
 
-        if (createAccountLink) {
-            createAccountLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                if (signupTab) signupTab.click();
-                loginForm?.querySelector("input")?.focus();
-            });
-        }
+        setMode("login");
     }
-});
 
-
-// Profile / settings navigation available on all authenticated screens.
-document.addEventListener("DOMContentLoaded", function () {
+    // Profile / settings navigation on authenticated pages.
     document.querySelectorAll("[data-profile-button]").forEach(function (button) {
         button.addEventListener("click", function () {
             window.location.href = "settings.html";
