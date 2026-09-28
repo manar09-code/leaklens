@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'diagnostic_screen.dart';
+import 'diagnostic_screen.dart';\nimport 'settings_screen.dart';
 import '../models/diagnostic_state.dart';
 
 class FixturesScreen extends StatefulWidget {
@@ -265,6 +265,35 @@ class _FixturesScreenState extends State<FixturesScreen> {
         const Spacer(),
         Row(
           children: [
+          IconButton(
+            tooltip: 'Profile & Settings',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SettingsScreen(
+                    diagnosticState: widget.diagnosticState,
+                  ),
+                ),
+              );
+            },
+            icon: Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF38BDF8), Color(0xFF0EA5E9)],
+                ),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.account_circle,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ),
+            const SizedBox(width: 8),
             SizedBox(
               width: 30,
               height: 30,
